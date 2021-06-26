@@ -1,6 +1,6 @@
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
-import googleIconImg from "../assets/images/google-icon.svg";
+import googleIconImg from "../assets/images/Google.png";
 import { useHistory } from 'react-router-dom';
 import { Button } from '../components/Button';
 import '../styles/auth.scss';
@@ -36,6 +36,16 @@ export function Home() {
       return;
     }
 
+    if (user?.id === roomRef.val().authorId) {
+      history.push(`/admin/rooms/${roomCode}`);
+      return;
+    }
+
+    if (roomRef.val().endedAt) {
+      alert('Room already closed.')
+      return;
+    }
+
     history.push(`/rooms/${roomCode}`);
 
   }
@@ -51,7 +61,7 @@ export function Home() {
         <div className="main-content">
           <img src={logoImg} alt="LetMeAsk" />
           <button onClick={handleCreateRoom} className="create-room">
-            <img src={googleIconImg} alt="Logo do Google" />
+            <img className="google-icon" src={googleIconImg} alt="Logo do Google" />
             Crie sua sala com o Google
           </button>
           <div className="separator">ou entre em uma sala</div>

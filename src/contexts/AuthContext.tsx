@@ -10,6 +10,7 @@ type User = {
 type AuthContextType = {
   user: User | undefined;
   signInWithGoogle: () => Promise<void>;
+  signOutWithGoogle: () => Promise<void>;
 };
 
 type AuthContextProviderProps = {
@@ -63,9 +64,22 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
     }
   }
 
+  async function signOutWithGoogle() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        alert("Sign-out successful.");
+      })
+      .catch((error) => {
+        alert("An error happened");
+      });
+
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, signOutWithGoogle }}>
       {props.children}
     </AuthContext.Provider>
-  )
+  );
 }
